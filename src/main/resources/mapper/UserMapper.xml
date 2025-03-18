@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shisan.note.mapper.admin.UserMapper">
+
+
+    <select id="list" resultType="com.shisan.note.dto.admin.UserDto">
+        SELECT u.*
+        FROM `tbl_user` u
+        where u.deleted = 0
+        <if test="null != params.status">
+            and u.`status` = #{params.status}
+        </if>
+        <if test="null != params.phone and params.phone != ''">
+            and u.`phone` = #{params.phone}
+        </if>
+        <if test="null != params.userName and params.userName != ''">
+            and u.`user_name` like concat('%',#{params.userName},'%')
+        </if>
+        <if test="null != params.name and params.name != ''">
+            and u.`name` like concat('%',#{params.name},'%')
+        </if>
+        GROUP BY u.id
+        order by u.created desc
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: note-api
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+secure:
+  auths:
+    - "/api/auth/userMenu"
+    - "/api/auth/permissionList"
+  ignores:
+
