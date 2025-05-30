@@ -3,7 +3,6 @@ package com.shisan.note.service;
 import cn.shisan.common.domain.common.PageQuery;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import com.shisan.note.common.enums.MemberCardEnums;
 import com.shisan.note.dto.member.MemberCardStatusDto;
 import com.shisan.note.dto.member.MemberCardTransactionDto;
 import com.shisan.note.dto.member.MemberCardRegisterDto;
