@@ -1,9 +1,15 @@
 package com.shisan.note.controller.admin;
 
 import cn.shisan.common.domain.common.JResult;
+import cn.shisan.common.domain.common.PageQuery;
+import com.github.pagehelper.PageInfo;
 import com.shisan.note.controller.BaseController;
 import com.shisan.note.dto.member.MemberCardRegisterDto;
+import com.shisan.note.dto.member.MemberCardStatusDto;
 import com.shisan.note.dto.member.MemberCardTransactionDto;
+import com.shisan.note.dto.member.MemberCardUpdateDto;
+import com.shisan.note.dto.query.MemberCardQueryDto;
+import com.shisan.note.entity.member.MemberCard;
 import com.shisan.note.service.MemberCardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +32,13 @@ public class MemberCardController extends BaseController {
         return success();
     }
 
+    @ApiOperation("会员修改")
+    @PostMapping("/update")
+    public JResult<Void> update(@RequestBody MemberCardUpdateDto updateDto) {
+        memberCardService.update(updateDto);
+        return success();
+    }
+
     @ApiOperation("会员充值")
     @PostMapping("/recharge")
     public JResult<Void> recharge(@RequestBody MemberCardTransactionDto transactionDto) {
@@ -39,5 +52,20 @@ public class MemberCardController extends BaseController {
         memberCardService.consume(transactionDto);
         return success();
     }
+
+    @ApiOperation("会员状态变更")
+    @PostMapping("/updateStatus")
+    public JResult<Void> updateStatus(@RequestBody MemberCardStatusDto statusDto) {
+        memberCardService.updateStatus(statusDto);
+        return success();
+    }
+
+    @ApiOperation("会员列表")
+    @PostMapping("/page")
+    public JResult<PageInfo<MemberCard>> pageList(@RequestBody PageQuery<MemberCardQueryDto> query) {
+        PageInfo<MemberCard> pageInfo = memberCardService.pageList(query);
+        return success(pageInfo);
+    }
+
 
 }
