@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * controller的父类
+ *
  * @author lijing
  */
 public class BaseController {

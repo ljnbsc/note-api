@@ -3,4 +3,13 @@
 <mapper namespace="com.shisan.note.mapper.member.MemberCardMapper">
 
 
+    <update id="updateRemainingAmount">
+        UPDATE tbl_member_card
+        SET remaining_amount = #{remainingAmount},  -- 新库存
+            version = version + 1  -- 版本号+1
+        WHERE id = #{id}
+          AND version = #{version};  -- 关键：校验旧版本号
+    </update>
+
+
 </mapper>

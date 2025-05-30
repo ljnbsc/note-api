@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 .antMatchers("/swagger-resources/**", "/webjars/**",
                                         "/v2/**", "/swagger-ui.html/**").permitAll()
                                 .antMatchers("/api/local/file/img/*").permitAll()
-//                        .requestMatchers("/api/**").permitAll()
+                        .antMatchers("/api/**").permitAll()
                                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                                 // 允许 SpringMVC 的默认错误地址匿名访问

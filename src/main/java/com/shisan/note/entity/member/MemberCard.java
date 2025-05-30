@@ -42,6 +42,9 @@ public class MemberCard {
     @ApiModelProperty("状态：1-正常，2-冻结，3-注销")
     private Integer status;
 
+    @ApiModelProperty("版本号")
+    private Integer version;
+
     @ApiModelProperty("操作人")
     private String operator;
 
