@@ -35,5 +35,9 @@ public interface NotebookService extends IService<Notebook> {
      */
     List<Notebook> getUserNotebook();
 
+    /**
+     * 查询笔记本
+     */
+    Notebook findById(Long id);
 
 }
