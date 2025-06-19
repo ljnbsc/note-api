@@ -49,6 +49,6 @@ public class AuthExceptionHandler extends BaseController {
     @ExceptionHandler(value = Exception.class)
     public JResult<String> exceptionHandler(Exception exception) {
         log.info("Exception：", exception);
-        return error(exception.getMessage());
+        return error("系统繁忙，请联系管理员!");
     }
 }

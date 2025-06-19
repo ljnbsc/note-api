@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.shisan.note.dto.note.NoteDto;
 import com.shisan.note.entity.note.Note;
 
+import java.util.List;
+
 
 /**
  * 笔记本
@@ -28,6 +30,11 @@ public interface NoteService extends IService<Note> {
      * 笔记本删除
      */
     void delete(Long id);
+
+    /**
+     * 获取笔记本下所有笔记
+     */
+    List<Note> findNoteList(Long notebookId);
 
 
 }

@@ -3,10 +3,8 @@ package com.shisan.note.controller.note;
 import cn.shisan.common.domain.common.JResult;
 import com.shisan.note.controller.BaseController;
 import com.shisan.note.dto.note.NoteDto;
-import com.shisan.note.dto.note.NotebookDto;
-import com.shisan.note.entity.note.Notebook;
+import com.shisan.note.entity.note.Note;
 import com.shisan.note.service.note.NoteService;
-import com.shisan.note.service.note.NotebookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +40,12 @@ public class NoteController extends BaseController {
     public JResult<Void> delete(@PathVariable Long id) {
         noteService.delete(id);
         return success();
+    }
+
+    @ApiOperation("笔记本下所有笔记")
+    @PostMapping("/findNoteList/{notebookId}")
+    public JResult<List<Note>> findNoteList(@PathVariable Long notebookId) {
+        List<Note> noteList = noteService.findNoteList(notebookId);
+        return success(noteList);
     }
 }

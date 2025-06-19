@@ -69,7 +69,7 @@ public class NotebookServiceImpl extends ServiceImpl<NotebookMapper, Notebook> i
     @Override
     public List<Notebook> getUserNotebook() {
         return baseMapper.selectList(Wrappers.<Notebook>lambdaQuery()
-                .eq(Notebook::getDeleted, DelEnum.NO_DEL.getText())
+                .eq(Notebook::getDeleted, DelEnum.NO_DEL.getCode())
                 .eq(Notebook::getUserId, RequestContextUtils.getUserId()));
     }
 

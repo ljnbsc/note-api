@@ -1,6 +1,7 @@
 package com.shisan.note.service.note;
 
 import cn.shisan.common.exception.BusinessException;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shisan.note.common.enums.DelEnum;
 import com.shisan.note.convert.NoteConvert;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -70,6 +72,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         del.setModified(LocalDateTime.now());
         int updated = baseMapper.updateById(del);
         AssertUtils.isTrue(updated <= 0, "笔记删除失败，请重试!");
+    }
+
+    @Override
+    public List<Note> findNoteList(Long notebookId) {
+        return baseMapper.selectList(Wrappers.<Note>lambdaQuery()
+                .eq(Note::getDeleted, DelEnum.NO_DEL.getCode())
+                .eq(Note::getNotebookId, notebookId)
+                .eq(Note::getUserId, RequestContextUtils.getUserId()));
     }
 
 }
