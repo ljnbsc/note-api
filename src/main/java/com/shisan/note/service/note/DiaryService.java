@@ -1,6 +1,7 @@
 package com.shisan.note.service.note;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shisan.note.dto.note.DiaryDto;
 import com.shisan.note.entity.note.Diary;
 
 /**
@@ -13,4 +14,19 @@ import com.shisan.note.entity.note.Diary;
  */
 public interface DiaryService extends IService<Diary> {
 
+
+    void add(DiaryDto diaryDto);
+
+
+    void update(DiaryDto diaryDto);
+
+    /**
+     * 删除
+     */
+    void delete(Long id);
+
+    /**
+     * 查询笔
+     */
+    Diary findById(Long id);
 }

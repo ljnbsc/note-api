@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -41,7 +42,7 @@ public class Diary implements Serializable {
     private String content;
 
     @ApiModelProperty(value = "日期")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime created;

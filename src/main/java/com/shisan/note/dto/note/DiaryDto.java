@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -31,8 +30,5 @@ public class DiaryDto implements Serializable {
 
     @ApiModelProperty(value = "小记内容")
     private String content;
-
-    @ApiModelProperty(value = "日期")
-    private LocalDateTime date;
 
 }
