@@ -1,6 +1,5 @@
 package com.shisan.note.service.note;
 
-import cn.shisan.common.exception.BusinessException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shisan.note.common.enums.DelEnum;
@@ -8,25 +7,19 @@ import com.shisan.note.dto.note.NotebookDto;
 import com.shisan.note.entity.note.Notebook;
 import com.shisan.note.mapper.note.NotebookMapper;
 import com.shisan.note.utils.AssertUtils;
+import com.shisan.note.utils.AuthUtil;
 import com.shisan.note.utils.RequestContextUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
 @RequiredArgsConstructor
 public class NotebookServiceImpl extends ServiceImpl<NotebookMapper, Notebook> implements NotebookService {
 
-
-    private void check(Notebook notebook) {
-        if (!Objects.equals(notebook.getUserId(), RequestContextUtils.getUserId())) {
-            throw new BusinessException("无权操作！");
-        }
-    }
 
     @Override
     public void add(NotebookDto notebookDto) {
@@ -42,7 +35,7 @@ public class NotebookServiceImpl extends ServiceImpl<NotebookMapper, Notebook> i
     public void update(NotebookDto notebookDto) {
         Notebook one = baseMapper.selectById(notebookDto.getId());
         AssertUtils.isNull(one, "笔记本不存在");
-        check(one);
+        AuthUtil.check(one.getUserId());
 
         Notebook notebook = new Notebook();
         notebook.setId(notebook.getId());
@@ -56,7 +49,7 @@ public class NotebookServiceImpl extends ServiceImpl<NotebookMapper, Notebook> i
     public void delete(Long id) {
         Notebook notebook = baseMapper.selectById(id);
         AssertUtils.isNull(notebook, "笔记本不存在");
-        check(notebook);
+        AuthUtil.check(notebook.getUserId());
 
         Notebook del = new Notebook();
         del.setId(id);
@@ -75,8 +68,10 @@ public class NotebookServiceImpl extends ServiceImpl<NotebookMapper, Notebook> i
 
     @Override
     public Notebook findById(Long id) {
-        return baseMapper.selectOne(Wrappers.<Notebook>lambdaQuery()
+        Notebook notebook = baseMapper.selectOne(Wrappers.<Notebook>lambdaQuery()
                 .eq(Notebook::getDeleted, DelEnum.NO_DEL.getCode())
                 .eq(Notebook::getId, id));
+        AuthUtil.check(notebook.getUserId());
+        return notebook;
     }
 }

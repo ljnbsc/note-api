@@ -10,13 +10,13 @@ import com.shisan.note.entity.note.Note;
 import com.shisan.note.entity.note.Notebook;
 import com.shisan.note.mapper.note.NoteMapper;
 import com.shisan.note.utils.AssertUtils;
+import com.shisan.note.utils.AuthUtil;
 import com.shisan.note.utils.RequestContextUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -24,12 +24,6 @@ import java.util.Objects;
 public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements NoteService {
 
     private final NotebookService notebookService;
-
-    private void checkAuth(Note note) {
-        if (!Objects.equals(note.getUserId(), RequestContextUtils.getUserId())) {
-            throw new BusinessException("无权操作！");
-        }
-    }
 
     @Override
     public void add(NoteDto noteDto) {
@@ -51,7 +45,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     public void update(NoteDto noteDto) {
         Note one = baseMapper.selectById(noteDto.getId());
         AssertUtils.isNull(one, "笔记不存在");
-        checkAuth(one);
+        AuthUtil.check(one.getUserId());
         checkData(noteDto);
 
         Note note = NoteConvert.convert(noteDto);
@@ -64,7 +58,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     public void delete(Long id) {
         Note notebook = baseMapper.selectById(id);
         AssertUtils.isNull(notebook, "笔记不存在");
-        checkAuth(notebook);
+        AuthUtil.check(notebook.getUserId());
 
         Note del = new Note();
         del.setId(id);
